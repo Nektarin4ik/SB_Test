@@ -1,8 +1,6 @@
 # Сложность алгоритма O(nlogn)
-def max_number(array: list):
-    for s in array:
-        if not s.isdigit():
-            raise ValueError("Строка должна содержать только цифры: {}".format(s))
-    sorted_lst = sorted(array, reverse=True)
-    concatenated_num = int(''.join(sorted_lst))
-    return concatenated_num
+def max_concatenated_number(array):
+    # Я использовал лямбда-функцию чтобы приравнять строки в списке к одной длине и сравнить их, это учтет частные случаи которые не были учтены до этого
+    array = sorted(array, key=lambda x: x * (len(max(array))+1), reverse=True)
+    return int(''.join(array)) 
+
