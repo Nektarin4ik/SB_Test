@@ -50,4 +50,3 @@ def up_numbers(num: str):
                         result = result+ "0"*(5-len(valid))+valid + " "
                         valid=""
     return result
-

@@ -6,4 +6,3 @@ def max_number(array: list):
     sorted_lst = sorted(array, reverse=True)
     concatenated_num = int(''.join(sorted_lst))
     return concatenated_num
-

@@ -1,5 +1,5 @@
-#Тест-кейс
-n = 8
+#Входные параметры для примера
+n = 7
 k = 12
 L = [120, 180, 50, 700, 150, 200, 30]
 
@@ -29,4 +29,3 @@ def max_min_path2(n, k, L):
     for _ in range(k):
         path_wi_s = sorted(min_path(path_wi_s), reverse=True)
     return list(map(lambda x: x[0], sorted(path_wi_s, key=lambda x: x[1])))
-
