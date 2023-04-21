@@ -1,37 +1,53 @@
-# Вариант с использованием встроенных методов для строк и сложностью O(n+k)
-def upgrade_number1(num: str):
-    good_num_left, good_num_right = num.split("\\")
-    lenght_left = len(good_num_left)
-    lenght_right = len(good_num_right)
-    if 2 <= lenght_left <= 4 and 2 <= lenght_right <= 5:
-        if lenght_left < 4:
-            good_num_left = '0'*(4-lenght_left) + good_num_left
-        if lenght_right < 5:
-            good_num_right = '0'*(5-lenght_right) + good_num_right
-        return good_num_left + '\\' + good_num_right
-    return ('Error: неправильный формат хорошего номера')
+import re
+MIN = 2
+MAX_LEFT = 4
+MAX_RIGHT = 5
 
-# Вариант со сложностью O(n)
-def upgrade_num(num: str):
-    result = ""
-    leading_zeros = ""
-    for i in range(len(num)):
-        if num[i] == "\\":
-            result += num[i]
-        elif num[i].isdigit():
-            leading_zeros += num[i]
-            if i < len(num)-1 and num[i+1] == '\\':
-                if 2 <= len(leading_zeros) <=4: 
-                    num_zeros = 4 - len(leading_zeros)
-                    result += "0" * num_zeros + leading_zeros
-                    leading_zeros = ""
-                else:
-                    return('Error: неправильный формат хорошего номера')
-            elif i == len(num) - 1:
-                if 2 <= len(leading_zeros) <=5: 
-                    num_zeros = 5 - len(leading_zeros)
-                    result += "0" * num_zeros + leading_zeros
-                    leading_zeros = ""
-                else:
-                    return('Error: неправильный формат хорошего номера')
+# Вариант с использованием регулярных выражений и встроенных функций для строк со сложностью O(n+m) 
+def up_numbers1(nums: str):
+    result =""
+    x = re.findall(r'\d+\\\d+', nums) 
+    for number in x:
+        left, right = number.split('\\')
+        if not MIN <= len(left) <= MAX_LEFT or not MIN <= len(right) <= MAX_RIGHT:
+            continue
+        left = "0"*(MAX_LEFT - len(left)) + left
+        right = "0"*(MAX_RIGHT - len(right)) + right
+        result = result + f'{left}\{right} '
     return result
+
+# Вариант без регулярных выражений со сложностью O(n)
+def up_numbers(num: str):
+    one_num = ""
+    result = ""
+    valid = ""
+    for i in range(len(num)):
+        if num[i].isdigit():
+            valid+=num[i]
+        elif num[i] == "\\":
+            if len(valid) < MIN or len(valid) > MAX_LEFT:
+                valid=''
+            elif MIN <= len(valid) <= MAX_LEFT:
+                if len(valid) <= MAX_LEFT:
+                    valid = "0"*(MAX_LEFT-len(valid))+valid+num[i]
+                    one_num += valid
+                    valid =""
+        else:
+            if len(one_num) > MIN and one_num[len(one_num)-1] != "\\" or len(one_num) == 0:
+                valid =""
+            elif len(valid) < MIN:
+                one_num = ""
+                valid = ""
+            elif 2 <= len(valid) <= MAX_RIGHT:
+                if len(valid) <= MAX_RIGHT:
+                    one_num = one_num + "0"*(MAX_RIGHT-len(valid))+valid
+                    result = result + one_num + " "
+                    one_num = ""
+                    valid = ""
+        if i == len(num)-1 and num[i].isdigit() and num[i-len(valid)+1]=="\\":
+            if MIN <= len(valid) <= MAX_RIGHT:
+                if len(valid) <= MAX_RIGHT:
+                        result = result+ "0"*(5-len(valid))+valid + " "
+                        valid=""
+    return result
+

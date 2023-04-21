@@ -7,6 +7,3 @@ def max_number(array: list):
     concatenated_num = int(''.join(sorted_lst))
     return concatenated_num
 
-array = ['11', '234', '005', '89']
-
-
