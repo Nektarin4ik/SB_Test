@@ -44,9 +44,9 @@ def up_numbers(num: str):
                     result = result + one_num + " "
                     one_num = ""
                     valid = ""
-        if i == len(num)-1 and num[i].isdigit() and num[i-len(valid)+1]=="\\":
+        if i == len(num)-1 and num[i].isdigit() and num[i-len(valid)]=="\\":
             if MIN <= len(valid) <= MAX_RIGHT:
                 if len(valid) <= MAX_RIGHT:
-                        result = result+ "0"*(5-len(valid))+valid + " "
+                        result = result + one_num + "0"*(5-len(valid))+valid + " "
                         valid=""
     return result
