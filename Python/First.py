@@ -16,7 +16,7 @@ def up_numbers1(nums: str):
         result = result + f'{left}\{right} '
     return result
 
-# Вариант без регулярных выражений со сложностью O(n)
+# Вариант без регулярных выражений со сложностью O(n) 
 def up_numbers(num: str):
     one_num = ""
     result = ""
